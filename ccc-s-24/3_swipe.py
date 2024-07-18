@@ -11,54 +11,30 @@ for i in range(N):
         print("NO")
         exit()
 
-print("YES")
-
 swipes = []
-for i in range(N):
+for i in range(N-1, -1, -1):
     if A[i] == B[i]:
         continue
-    # check to the left
-    for heck in range(i, -1, -1):
-        # print('leftcheck','heck', heck, 'i', i, 'A[i]', A[i], 'B[heck]', B[heck])
-        if A[heck] == B[i]:
-            swipes.append(['R', heck, i])
-            # print('swiping left', heck, i)
-            for frick in range(heck, i):
-                A[frick] = A[i]
     # check to the right
     for heck in range(i,N):
-        # print('rightcheck','heck', heck, 'i', i, 'A[i]', A[i], 'B[heck]', B[heck])
         if A[heck] == B[i]:
             swipes.append(['L', i, heck])
-            # print('swiping right', i, heck)
             for frick in range(i, heck):
-                A[frick] = A[i]
+                # print("L",frick)
+                A[frick] = B[i]
+            break
+    # check to the left
+    for heck in range(i, -1, -1):
+        if A[heck] == B[i]:
+            swipes.append(['R', heck, i])
+            for frick in range(heck, i):
+                # print("R",frick)
+                A[frick+1] = B[i]
+            break
 
-
-
-    # for heck in range(N-1, -1, -1):
-    #     if B[heck] == A[i]:
-    #         if i > heck:
-    #             # swipe left
-    #             swipes.append(['L', heck, i])
-    #             for frick in range(heck, i):
-    #                 A[frick] = A[i]
-    #         else:
-    #             # swipe right
-    #             swipes.append(['R', i, heck])
-    #             for frick in range(i, heck):
-    #                 A[frick] = A[i]
-
+# print(A)
+# print(B)
+print("YES" if A == B else "NO")
 print(len(swipes))
+swipes = swipes[::-1]
 print('\n'.join([' '.join(map(str, x)) for x in swipes]))
-
-
-    # if i > 0 and A[i] == B[i-1]:
-    #     swipes.append("L")
-    #     A[i], A[i-1] = A[i-1], A[i]
-    # elif i < N-1 and A[i] == B[i+1]:
-    #     swipes.append("R")
-    #     A[i], A[i+1] = A[i+1], A[i]
-    # else:
-    #     print("NO")
-    #     exit()
